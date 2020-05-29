@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_quizFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
+        <argument
+            android:name="difficulty"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
@@ -31,5 +34,11 @@
         <action
             android:id="@+id/action_resultFragment_to_titleFragment"
             app:destination="@id/titleFragment" />
+        <argument
+            android:name="point"
+            app:argType="integer" />
+        <argument
+            android:name="difficulty"
+            app:argType="integer" />
     </fragment>
 </navigation>

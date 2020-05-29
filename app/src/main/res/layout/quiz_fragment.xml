@@ -8,89 +8,214 @@
             type="com.example.regexquest.quiz.QuizViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!--        android:text="@{quizViewModel.currentQuiz.quiz}" />-->
+    <LinearLayout
+        android:id="@+id/linear_quizFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorJuniorLight"
+        android:orientation="vertical"
+        android:weightSum="6">
+
 
         <LinearLayout
+            android:id="@+id/linear_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.1">
+            android:weightSum="2">
 
-            <TextView
-                android:id="@+id/textView_quiz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@{quizViewModel.currentQuiz.quiz}" />
 
-            <TextView
-                android:id="@+id/textView_match"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@{quizViewModel.currentQuiz.match}" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/linear_quiz"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_quizHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/quiz_quizHeader"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/text_quiz"
+                        style="@style/quiz_quiz"
+                        android:layout_marginTop="10dp"
+                    android:text="@{quizViewModel.currentQuiz.quiz}" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_match"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:id="@+id/linear_match"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_matchHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="@string/quiz_matchHeader"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/text_match"
+                        style="@style/quiz_quiz"
+                        android:text="@{quizViewModel.spannableMatch}" />
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.80">
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/image_quiz"
+                android:layout_width="243dp"
+                android:layout_height="154dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                app:layout_constraintTop_toBottomOf="@+id/linear_card"
+                app:srcCompat="@drawable/quiz_junior"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <TextView
+                android:id="@+id/text_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@{quizViewModel.pointText}"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_pointAnimation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="15dp"
+                android:alpha="0"
+                android:text="@{quizViewModel.pointAnimationText}"
+                android:textColor="@color/colorMinusPoint"
+                android:textSize="24sp" />
+<!--            android:textColor="@{ContextCompat.getColor(context, quizViewModel.pointAnimationTextColor)}"-->
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/linear_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ProgressBar
+                android:id="@+id/progress_time"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                android:progress="@{quizViewModel.progress}" />
+
+            <TextView
+                android:id="@+id/text_timeStart"
+                android:layout_width="59dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginStart="5dp"
+                android:lines="1"
+                android:text="9:00"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/text_timeEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="5dp"
+                android:text="18:00"
+                android:textSize="12sp" />
+        </FrameLayout>
+        <LinearLayout
+            android:id="@+id/linear_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="Which RegEx matches it?"
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/button_answer1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{quizViewModel.currentQuiz.answers[0]}"
+                style="@style/quiz_button"
                 android:onClick="@{()->quizViewModel.onAnswer(0)}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button3" />
+                android:enabled="@{quizViewModel.enableAnswer1}"
+            android:text="@{quizViewModel.currentQuiz.answers[0]}" />
+<!--            android:text="foo" />-->
 
             <Button
                 android:id="@+id/button_answer2"
+                style="@style/quiz_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{quizViewModel.currentQuiz.answers[1]}"
                 android:onClick="@{()->quizViewModel.onAnswer(1)}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.486"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                android:enabled="@{quizViewModel.enableAnswer2}"
+                android:text="@{quizViewModel.currentQuiz.answers[1]}" />
 
             <Button
                 android:id="@+id/button_answer3"
+                style="@style/quiz_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{quizViewModel.currentQuiz.answers[2]}"
                 android:onClick="@{()->quizViewModel.onAnswer(2)}"
-                app:layout_constraintBottom_toTopOf="@+id/button4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button2" />
+                android:enabled="@{quizViewModel.enableAnswer3}"
+                android:text="@{quizViewModel.currentQuiz.answers[2]}" />
 
             <Button
                 android:id="@+id/button_answer4"
+                style="@style/quiz_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{quizViewModel.currentQuiz.answers[3]}"
                 android:onClick="@{()->quizViewModel.onAnswer(3)}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button3" />
+                android:enabled="@{quizViewModel.enableAnswer4}"
+                android:text="@{quizViewModel.currentQuiz.answers[3]}" />
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 </layout>

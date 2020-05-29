@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" >
 
     <data>
@@ -12,13 +13,49 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button_start"
+        <TextView
+            android:id="@+id/text_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:gravity="center"
+            android:text="@string/title_text"
+            android:textSize="50sp" />
+
+        <ImageView
+            android:id="@+id/image_title"
+            android:layout_width="230dp"
+            android:layout_height="185dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/title" />
+
+        <Button
+            android:id="@+id/button_start_junior"
+            style="@style/title_button"
+            android:background="@color/colorJunior"
             android:onClick="@{()->titleViewModel.onStart()}"
-            />
+            android:text="Junior" />
+
+        <Button
+            android:id="@+id/button_start_senior"
+            style="@style/title_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorSenior"
+            android:onClick="@{()->titleViewModel.onStart()}"
+            android:text="Senior" />
+
+        <Button
+            android:id="@+id/button_start_cto"
+            style="@style/title_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorCto"
+            android:onClick="@{()->titleViewModel.onStart()}"
+            android:text="CTO" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 </layout>

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 
 import com.example.regexquest.R
 import com.example.regexquest.databinding.ResultFragmentBinding
@@ -31,12 +32,17 @@ class ResultFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.result_fragment, container, false)
 
-        val viewModelFactory = ResultViewModelFactory()
+        val args = ResultFragmentArgs.fromBundle(requireArguments())
+        val point = args.point
+        val difficulty = args.difficulty
+
+        val viewModelFactory = ResultViewModelFactory(point,difficulty)
         val resultViewModel = ViewModelProviders
             .of(this, viewModelFactory)
             .get(ResultViewModel::class.java)
         binding.resultViewModel = resultViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
 
         resultViewModel.navigateToTitle.observe(this, Observer {
             if(it == true){
@@ -54,7 +60,6 @@ class ResultFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ResultViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

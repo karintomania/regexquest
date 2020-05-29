@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Reg Ex Quest</string>
+    <string name="title_text">Reg Ex Quest</string>
+    <string name="title_howToPlay"><u>how to play?</u></string>
+    <string name="quiz_quizHeader"><u>Target Text</u></string>
+    <string name="quiz_matchHeader"><u>Match</u></string>
 </resources>
