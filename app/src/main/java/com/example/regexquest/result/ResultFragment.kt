@@ -33,10 +33,8 @@ class ResultFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.result_fragment, container, false)
 
         val args = ResultFragmentArgs.fromBundle(requireArguments())
-        val point = args.point
-        val difficulty = args.difficulty
 
-        val viewModelFactory = ResultViewModelFactory(point,difficulty)
+        val viewModelFactory = ResultViewModelFactory(args.correctAnswerCount, args.wrongAnswerCorrect,  args.point, args.difficulty)
         val resultViewModel = ViewModelProviders
             .of(this, viewModelFactory)
             .get(ResultViewModel::class.java)
@@ -52,7 +50,6 @@ class ResultFragment : Fragment() {
                 resultViewModel.doneNavigate()
             }
         })
-
 
         return binding.root
     }

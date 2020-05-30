@@ -35,6 +35,12 @@
             android:id="@+id/action_resultFragment_to_titleFragment"
             app:destination="@id/titleFragment" />
         <argument
+            android:name="correctAnswerCount"
+            app:argType="integer" />
+        <argument
+            android:name="wrongAnswerCorrect"
+            app:argType="integer" />
+        <argument
             android:name="point"
             app:argType="integer" />
         <argument
