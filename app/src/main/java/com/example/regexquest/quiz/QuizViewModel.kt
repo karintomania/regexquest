@@ -58,6 +58,11 @@ class QuizViewModel(
         formatMatch(quiz)
     }
 
+    // variables for score
+    var correctAnswerCount = 0
+    var wrongAnswerCount = 0
+
+    // variables for display
     private val _point = MutableLiveData<Int>()
     val point: LiveData<Int>
         get() = _point
@@ -141,6 +146,7 @@ class QuizViewModel(
 
             // calculate point
             _point.value = _point.value?.plus(answerPoint)
+            correctAnswerCount ++
 
             // if it is first answer, add time bonus
             if(answerCount == 0){
@@ -170,6 +176,8 @@ class QuizViewModel(
                 3 -> _enableAnswer4.value = false
             }
             answerCount ++
+            wrongAnswerCount ++
+
             _point.value = _point.value?.minus(minusPointList[answerCount])
             setPointAnimationText(-1 * minusPointList[answerCount], 0)
         }

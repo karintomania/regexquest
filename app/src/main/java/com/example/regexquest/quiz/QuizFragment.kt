@@ -43,7 +43,11 @@ class QuizFragment : Fragment() {
         quizViewModel.navigateToResult.observe(this, Observer {
             if(it == true){
                 this.findNavController().navigate(
-                    QuizFragmentDirections.actionQuizFragmentToResultFragment(quizViewModel.point.value!!.toInt(), 0)
+                    QuizFragmentDirections.actionQuizFragmentToResultFragment(
+                        quizViewModel.correctAnswerCount,
+                        quizViewModel.wrongAnswerCount,
+                        quizViewModel.point?.value?:0,
+                        args.difficulty)
                 )
                 quizViewModel.doneNavigate()
             }
