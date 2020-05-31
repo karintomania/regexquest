@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 import com.example.regexquest.R
+import com.example.regexquest.database.QuizDatabase
 import com.example.regexquest.databinding.ResultFragmentBinding
 import com.example.regexquest.quiz.QuizFragmentDirections
 import com.example.regexquest.title.TitleViewModel
@@ -34,7 +36,11 @@ class ResultFragment : Fragment() {
 
         val args = ResultFragmentArgs.fromBundle(requireArguments())
 
-        val viewModelFactory = ResultViewModelFactory(args.correctAnswerCount, args.wrongAnswerCorrect,  args.point, args.difficulty)
+        // datasource
+        val application = requireNotNull(this.activity).application
+        val dataSource = QuizDatabase.getInstance(application).highScoreDao
+
+        val viewModelFactory = ResultViewModelFactory(dataSource, args.correctAnswerCount, args.wrongAnswerCorrect,  args.point, args.difficulty)
         val resultViewModel = ViewModelProviders
             .of(this, viewModelFactory)
             .get(ResultViewModel::class.java)
@@ -48,6 +54,12 @@ class ResultFragment : Fragment() {
                     ResultFragmentDirections.actionResultFragmentToTitleFragment()
                 )
                 resultViewModel.doneNavigate()
+            }
+        })
+
+        resultViewModel.isHighScore.observe(this, Observer {
+            if(it == true){
+                binding.textNewHighScore.visibility = View.VISIBLE
             }
         })
 

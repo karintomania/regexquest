@@ -8,7 +8,7 @@ data class QuizEntity (
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L,
 
-    val level: Int,
+    val difficulty: Int,
 
     val quiz: String,
     val match: String,

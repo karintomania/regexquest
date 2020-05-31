@@ -28,8 +28,7 @@ interface QuizDatabaseDao {
 //    @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC LIMIT 1")
 //    fun getTonight(): QuizNight?
 
-    @Query("SELECT * FROM quiz WHERE level = :level")
-    fun selectByLevel(level: Int): List<QuizEntity>
-
+    @Query("SELECT * FROM quiz WHERE difficulty = :difficulty")
+    fun selectByDifficulty(difficulty: Int): List<QuizEntity>
 
 }

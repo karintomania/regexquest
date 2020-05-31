@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="resultViewModel"
             type="com.example.regexquest.result.ResultViewModel" />
@@ -20,165 +22,257 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="180dp"
-                android:layout_height="100dp"
+                android:layout_width="200dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
                 app:srcCompat="@drawable/result_illust" />
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/text_Report"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="Report"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <TableLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="48dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginBottom="12dp"
-                android:stretchColumns="1">
+                android:orientation="vertical">
 
-                <TableRow
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_rank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp">
 
                     <TextView
-                        android:id="@+id/text_correctAnswerHeader"
+                        android:id="@+id/text_rankHeader"
                         style="@style/result_table_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Correct Answer" />
-
-                    <TextView
-                        android:id="@+id/text_correctAnswer"
-                        style="@style/result_table_body"
-                        android:text="@{resultViewModel.correctAnswerCountText}" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/text_wrongAnswerHeader"
-                        style="@style/result_table_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Wrong Answer" />
-
-                    <TextView
-                        android:id="@+id/text_wrongAnswer"
-                        style="@style/result_table_body"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
                         android:gravity="end"
-                        android:text="@{resultViewModel.wrongAnswerCountText}" />
-
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
+                        android:text="Rank" />
 
                     <TextView
-                        android:id="@+id/text_TotalHeader"
-                        style="@style/result_table_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total Point" />
-
-                    <TextView
-                        android:id="@+id/text_total"
+                        android:id="@+id/text_rank"
                         style="@style/result_table_body"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="@{resultViewModel.totalPoint}" />
-                </TableRow>
+                        android:layout_gravity="center"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center_vertical"
+                        android:text="@{resultViewModel.rank}"
+                        android:textSize="50sp" />
 
-                                <TableRow
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                </androidx.cardview.widget.CardView>
 
-                                    <TextView
-                                        android:id="@+id/text_accuracyHeader"
-                                        style="@style/result_table_header"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Accuracy" />
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_resultTable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="24dp">
 
-                                    <TextView
-                                        android:id="@+id/text_accuracy"
-                                        style="@style/result_table_body"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:gravity="end"
-                                        android:text="@{resultViewModel.accuracyText}" />
-                                </TableRow>
-            </TableLayout>
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:stretchColumns="1">
 
-        </androidx.cardview.widget.CardView>
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="24dp">
+                            <TextView
+                                android:id="@+id/text_classHeader"
+                                style="@style/result_table_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Class" />
 
-            <TextView
-                android:id="@+id/text_rankHeader"
-                style="@style/result_table_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
-                android:gravity="end"
-                android:text="Rank" />
+                            <TextView
+                                android:id="@+id/text_class"
+                                style="@style/result_table_body"
+                                android:text="@{resultViewModel.classText}" />
+                        </TableRow>
 
-            <TextView
-                android:id="@+id/text_rank"
-                style="@style/result_table_body"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical"
-                android:text="@{resultViewModel.rank}"
-                android:textSize="50sp" />
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-        </androidx.cardview.widget.CardView>
+                            <TextView
+                                android:id="@+id/text_correctAnswerHeader"
+                                style="@style/result_table_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Correct Answer" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="24dp"
-            android:onClick="@{()->resultViewModel.onBackToTitle()}"
-            android:text="Back to Title" />
+                            <TextView
+                                android:id="@+id/text_correctAnswer"
+                                style="@style/result_table_body"
+                                android:text="@{resultViewModel.correctAnswerCountText}" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/text_wrongAnswerHeader"
+                                style="@style/result_table_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Wrong Answer" />
+
+                            <TextView
+                                android:id="@+id/text_wrongAnswer"
+                                style="@style/result_table_body"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="@{resultViewModel.wrongAnswerCountText}" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/text_accuracyHeader"
+                                style="@style/result_table_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Accuracy" />
+
+                            <TextView
+                                android:id="@+id/text_accuracy"
+                                style="@style/result_table_body"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:text="@{resultViewModel.accuracyText}" />
+                        </TableRow>
+
+                        <!--                        <TableRow-->
+                        <!--                            android:layout_width="match_parent"-->
+                        <!--                            android:layout_height="match_parent">-->
+
+
+                        <!--                            <TextView-->
+                        <!--                                android:id="@+id/text_TotalHeader"-->
+                        <!--                                style="@style/result_table_header"-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:text="Total Point" />-->
+
+                        <!--                            <TextView-->
+                        <!--                                android:id="@+id/text_total"-->
+                        <!--                                style="@style/result_table_body"-->
+                        <!--                                android:layout_width="wrap_content"-->
+                        <!--                                android:layout_height="wrap_content"-->
+                        <!--                                android:gravity="end"-->
+                        <!--                                android:text="@{resultViewModel.totalPoint}" />-->
+                        <!--                        </TableRow>-->
+
+                    </TableLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="24dp">
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="24dp"
+                        android:stretchColumns="1">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/text_totalPointHeader"
+                                style="@style/result_table_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Total Point" />
+
+                            <TextView
+                                android:id="@+id/text_totalPoint"
+                                style="@style/result_table_body"
+                                android:text="@{resultViewModel.totalPoint}" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:id="@+id/text_highScoreHeader"
+                                style="@style/result_table_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="High Score" />
+
+                            <TextView
+                                android:id="@+id/text_highScore"
+                                style="@style/result_table_body"
+                                android:text="@{resultViewModel.highScoreText}" />
+                        </TableRow>
+
+                    </TableLayout>
+
+                    <TextView
+                        android:id="@+id/text_newHighScore"
+                        style="@style/result_table_body"
+                        android:layout_gravity="bottom|center_horizontal|center_vertical|end"
+                        android:layout_marginEnd="24dp"
+                        android:text="New High Score!!"
+                        android:textColor="@android:color/holo_red_light"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/button"
+                    style="@style/quiz_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="60dp"
+                    android:onClick="@{()->resultViewModel.onBackToTitle()}"
+                    android:text="Back to Title" />
+
+            </LinearLayout>
+
+        </ScrollView>
     </LinearLayout>
 
 </layout>
