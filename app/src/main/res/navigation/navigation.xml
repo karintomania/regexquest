@@ -12,7 +12,9 @@
         tools:layout="@layout/title_fragment" >
         <action
             android:id="@+id/action_titleFragment_to_quizFragment"
-            app:destination="@id/quizFragment" />
+            app:destination="@id/quizFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
@@ -21,11 +23,14 @@
         tools:layout="@layout/quiz_fragment" >
         <action
             android:id="@+id/action_quizFragment_to_resultFragment"
-            app:destination="@id/resultFragment" />
+            app:destination="@id/resultFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
         <argument
             android:name="difficulty"
             app:argType="integer" />
     </fragment>
+
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.example.regexquest.result.ResultFragment"
@@ -33,7 +38,9 @@
         tools:layout="@layout/result_fragment" >
         <action
             android:id="@+id/action_resultFragment_to_titleFragment"
-            app:destination="@id/titleFragment" />
+            app:destination="@id/titleFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
         <argument
             android:name="correctAnswerCount"
             app:argType="integer" />
