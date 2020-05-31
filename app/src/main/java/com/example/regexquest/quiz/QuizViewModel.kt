@@ -17,7 +17,7 @@ class QuizViewModel(
 
     private val tag = "QuizViewModel"
 
-    private val quizAmount = 3
+    private val quizAmount = 1
     private var currentQuizIndex = 0
     private val gameTimeLimit = 30000L
     private val timeBonusLimit = 10000L

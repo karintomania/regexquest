@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat.animate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.regexquest.R
 import com.example.regexquest.database.QuizDatabase
 import com.example.regexquest.databinding.QuizFragmentBinding
+import com.example.regexquest.result.ResultFragmentArgs
 
 class QuizFragment : Fragment() {
 
@@ -30,6 +30,9 @@ class QuizFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.quiz_fragment, container, false)
 
+        val args = QuizFragmentArgs.fromBundle(requireArguments())
+
+        // datasource
         val application = requireNotNull(this.activity).application
         val dataSource = QuizDatabase.getInstance(application).quizDatabaseDao
         val viewModelFactory = QuizViewModelFactory(dataSource,application)
@@ -77,6 +80,9 @@ class QuizFragment : Fragment() {
             }
         })
 
+
+        setImage(binding,args.difficulty)
+
         return binding.root
     }
 
@@ -85,4 +91,11 @@ class QuizFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(QuizViewModel::class.java)
     }
 
+    private fun setImage(binding: QuizFragmentBinding, difficulty:Int){
+        when(difficulty){
+            0 -> binding.imageQuiz.setImageResource(R.drawable.quiz_junior)
+            1 -> binding.imageQuiz.setImageResource(R.drawable.quiz_senior)
+            2 -> binding.imageQuiz.setImageResource(R.drawable.quiz_cto)
+        }
+    }
 }

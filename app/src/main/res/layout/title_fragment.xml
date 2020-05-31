@@ -32,7 +32,7 @@
             android:id="@+id/button_start_junior"
             style="@style/title_button"
             android:background="@color/colorJunior"
-            android:onClick="@{()->titleViewModel.onStart()}"
+            android:onClick="@{()->titleViewModel.onStart(0)}"
             android:text="Junior" />
 
         <Button
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorSenior"
-            android:onClick="@{()->titleViewModel.onStart()}"
+            android:onClick="@{()->titleViewModel.onStart(1)}"
             android:text="Senior" />
 
         <Button
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorCto"
-            android:onClick="@{()->titleViewModel.onStart()}"
+            android:onClick="@{()->titleViewModel.onStart(2)}"
             android:text="CTO" />
 
         <FrameLayout

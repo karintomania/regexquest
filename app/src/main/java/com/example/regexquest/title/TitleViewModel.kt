@@ -1,5 +1,6 @@
 package com.example.regexquest.title
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +10,12 @@ class TitleViewModel : ViewModel() {
     val navigateToQuiz: LiveData<Boolean?>
         get() = _navigateToQuiz
 
-    fun onStart(){
+    private val tag = "TitleFragment"
+    var difficulty = 0
+
+    fun onStart(difficulty:Int){
+        Log.i(tag, "onStart")
+        this.difficulty = difficulty
         _navigateToQuiz.value = true
     }
 

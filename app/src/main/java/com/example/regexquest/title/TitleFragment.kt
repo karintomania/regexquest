@@ -38,7 +38,7 @@ class TitleFragment : Fragment() {
         titleViewModel.navigateToQuiz.observe(this, Observer {
             if(it == true){
                 this.findNavController().navigate(
-                    TitleFragmentDirections.actionTitleFragmentToQuizFragment(0)
+                    TitleFragmentDirections.actionTitleFragmentToQuizFragment(titleViewModel.difficulty)
                 )
                 titleViewModel.doneNavigate()
             }
