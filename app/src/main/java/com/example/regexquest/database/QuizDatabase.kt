@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@Database(entities = [QuizEntity::class, HighScore::class], version = 1, exportSchema = false)
+@Database(entities = [QuizEntity::class, HighScore::class], version = 2, exportSchema = false)
 abstract class QuizDatabase : RoomDatabase() {
 
     abstract val quizDatabaseDao: QuizDatabaseDao
@@ -42,7 +42,7 @@ abstract class QuizDatabase : RoomDatabase() {
                 context.applicationContext,
                 QuizDatabase::class.java,
                 "quiz_database")
-//                .createFromAsset("database/quiz_database.db")
+                .createFromAsset("database/quiz_database.db")
                 .fallbackToDestructiveMigration()
                 .build()
 

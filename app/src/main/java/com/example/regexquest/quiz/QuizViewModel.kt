@@ -10,14 +10,20 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.*
 import com.example.regexquest.database.QuizDatabaseDao
 import com.example.regexquest.R
+import com.example.regexquest.database.QuizEntity
+import kotlinx.coroutines.*
 
 class QuizViewModel(
     val database: QuizDatabaseDao,
-    application: Application): AndroidViewModel(application){
+    application: Application,
+    val difficulty: Int
+) : AndroidViewModel(application) {
 
     private val tag = "QuizViewModel"
+    private var viewModelJob = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private val quizAmount = 1
+    private val quizAmount = 3
     private var currentQuizIndex = 0
     private val gameTimeLimit = 30000L
     private val timeBonusLimit = 10000L
@@ -29,32 +35,33 @@ class QuizViewModel(
         get() = _navigateToResult
 
     // minus points depending on answer count
-    private val minusPointList = listOf<Int>(0,5,10,15)
+    private val minusPointList = listOf<Int>(0, 5, 10, 15)
 
-    private val quizzes: MutableList<Quiz?> = mutableListOf(
-        Quiz(
-            quiz = "foobar",
-            match = "%foo%bar",
-            answers = mutableListOf("f..", "f.*", "f+", "bar")
-        ),
-        Quiz(
-            quiz = "cat\ncan",
-            match = "%cat%\n%can%",
-            answers = mutableListOf("ca.", "ca+", "ca*", "c*+")
-        ),
-        Quiz(
-            quiz = "foo\nboo",
-            match = "%foo%\n%boo%",
-            answers = mutableListOf(".oo", ".o", "o.*", "oo.")
-        )
-    )
+    private var quizzes: MutableList<Quiz?> = mutableListOf()
+//        private var quizzes: MutableList<Quiz?> = mutableListOf(
+//        Quiz(
+//            quiz = "foobar",
+//            match = "%foo%bar",
+//            answers = mutableListOf("f..", "f.*", "f+", "bar")
+//        ),
+//        Quiz(
+//            quiz = "cat\ncan",
+//            match = "%cat%\n%can%",
+//            answers = mutableListOf("ca.", "ca+", "ca*", "c*+")
+//        ),
+//        Quiz(
+//            quiz = "foo\nboo",
+//            match = "%foo%\n%boo%",
+//            answers = mutableListOf(".oo", ".o", "o.*", "oo.")
+//        )
+//    )
 
 
     private val _currentQuiz = MutableLiveData<Quiz?>()
     val currentQuiz: LiveData<Quiz?>
         get() = _currentQuiz
 
-    val spannableMatch = Transformations.map(currentQuiz) {quiz ->
+    val spannableMatch = Transformations.map(currentQuiz) { quiz ->
         formatMatch(quiz)
     }
 
@@ -66,7 +73,7 @@ class QuizViewModel(
     private val _point = MutableLiveData<Int>()
     val point: LiveData<Int>
         get() = _point
-    val pointText = Transformations.map(point) {point ->
+    val pointText = Transformations.map(point) { point ->
         "Point: ${point.toString()}"
     }
 
@@ -107,10 +114,12 @@ class QuizViewModel(
 
 
     // timer of game
-    private val timer = object:CountDownTimer(gameTimeLimit, 50) {
+    private val timer = object : CountDownTimer(gameTimeLimit, 50) {
         override fun onTick(millisUntilFinished: Long) {
-            _progress.value = ( ( (gameTimeLimit - millisUntilFinished ) * 100 / gameTimeLimit ) ).toInt()
+            _progress.value =
+                (((gameTimeLimit - millisUntilFinished) * 100 / gameTimeLimit)).toInt()
         }
+
         override fun onFinish() {
             onEndOfQuiz()
         }
@@ -119,64 +128,91 @@ class QuizViewModel(
     private var timeBonus = timeBonusAmount
 
     // count time bonus
-    private val timeBonusTimer = object:CountDownTimer(timeBonusLimit, 10000) {
+    private val timeBonusTimer = object : CountDownTimer(timeBonusLimit, 10000) {
         override fun onTick(millisUntilFinished: Long) {
-            Log.i(tag, "onTick eachQuiz")
             timeBonus = timeBonusAmount
         }
+
         override fun onFinish() {
-            Log.i(tag, "onFinish eachQuiz")
             timeBonus = 0
         }
     }
 
-    init{
-        _point.value = 0
-        clearParameters()
-        setCurrentQuiz()
-        _animation.value = false
-        timer.start()
+    init {
+        uiScope.launch{
+            setQuizzes()
+            clearParameters()
+            setCurrentQuiz()
+            _point.value = 0
+            _animation.value = false
+            timer.start()
+        }
     }
 
+    private suspend fun setQuizzes() {
+        withContext(Dispatchers.IO) {
+            val quizEntityList = database.selectByDifficulty(difficulty)
+            val quizList = convertQuizEntity(quizEntityList)
+            quizzes = quizList
+            quizzes.shuffle()
+        }
 
-    fun onAnswer(index: Int){
+
+    }
+
+    private fun convertQuizEntity(quizEntityList: List<QuizEntity>):MutableList<Quiz?>{
+        val quizList = mutableListOf<Quiz?>()
+        for(quizEntity in quizEntityList){
+            val quiz = Quiz(unescapeNewLine(quizEntity.quiz),
+                            unescapeNewLine(quizEntity.match),
+                            mutableListOf<String>(quizEntity.answer, quizEntity.answer2, quizEntity.answer3, quizEntity.answer4))
+
+            quizList.add(quiz)
+        }
+        return quizList
+    }
+    private fun unescapeNewLine(description: String): String {
+        return description.replace("\\n", System.lineSeparator())
+    }
+
+    fun onAnswer(index: Int) {
 
         // if answer is correct...
-        if(quizzes[currentQuizIndex]!!.answers[0] == _currentQuiz.value!!.answers[index]){
+        if (quizzes[currentQuizIndex]!!.answers[0] == _currentQuiz.value!!.answers[index]) {
 
             // calculate point
             _point.value = _point.value?.plus(answerPoint)
-            correctAnswerCount ++
+            correctAnswerCount++
 
             // if it is first answer, add time bonus
-            if(answerCount == 0){
+            if (answerCount == 0) {
                 _point.value = _point.value?.plus(timeBonus)
                 setPointAnimationText(answerPoint, timeBonus)
-            }else{
-                setPointAnimationText(answerPoint,0)
+            } else {
+                setPointAnimationText(answerPoint, 0)
             }
 
-            currentQuizIndex ++
+            currentQuizIndex++
 
             //  after final question
-            if(currentQuizIndex >= quizAmount){
+            if (currentQuizIndex >= quizAmount) {
                 _animation.value = true
                 onEndOfQuiz()
-            }else{
+            } else {
                 clearParameters()
                 setCurrentQuiz()
             }
 
-        // if answer is wrong...
-        }else{
-            when(index){
+            // if answer is wrong...
+        } else {
+            when (index) {
                 0 -> _enableAnswer1.value = false
                 1 -> _enableAnswer2.value = false
                 2 -> _enableAnswer3.value = false
                 3 -> _enableAnswer4.value = false
             }
-            answerCount ++
-            wrongAnswerCount ++
+            answerCount++
+            wrongAnswerCount++
 
             _point.value = _point.value?.minus(minusPointList[answerCount])
             setPointAnimationText(-1 * minusPointList[answerCount], 0)
@@ -185,15 +221,15 @@ class QuizViewModel(
 
     }
 
-    fun doneNavigate(){
+    fun doneNavigate() {
         _navigateToResult.value = false
     }
 
-    fun doneAnimation(){
+    fun doneAnimation() {
         _animation.value = false
     }
 
-    private fun clearParameters(){
+    private fun clearParameters() {
         answerCount = 0
         _enableAnswer1.value = true
         _enableAnswer2.value = true
@@ -202,9 +238,9 @@ class QuizViewModel(
         timeBonusTimer.start()
     }
 
-    private fun setCurrentQuiz(){
-
+    private fun setCurrentQuiz() {
         // deep copy of current quiz
+        Log.i(tag, "size = ${quizzes.size.toString()}")
         val tmpQuiz = quizzes[currentQuizIndex]
         _currentQuiz.value = Quiz(
             quiz = tmpQuiz!!.quiz,
@@ -215,8 +251,8 @@ class QuizViewModel(
         _currentQuiz.value?.answers?.shuffle()
     }
 
-   // edit style of match text
-    private fun formatMatch(quiz: Quiz?):SpannableString{
+    // edit style of match text
+    private fun formatMatch(quiz: Quiz?): SpannableString {
         val match = quiz!!.match
         val matchText = match.replace("%", "")
         var startIndex = 0
@@ -227,13 +263,13 @@ class QuizViewModel(
         var spannable = SpannableString(matchText)
 
 
-        while(startIndex != -1){
+        while (startIndex != -1) {
             startIndex = match.indexOf("%", lastEndIndex + 1)
-            endIndex = match.indexOf("%", startIndex+1)
+            endIndex = match.indexOf("%", startIndex + 1)
             lastEndIndex = endIndex
-            if(startIndex != -1){
-                setSpan(spannable, startIndex - 2 * matchCount, endIndex  - 2 * matchCount -1)
-                matchCount ++
+            if (startIndex != -1) {
+                setSpan(spannable, startIndex - 2 * matchCount, endIndex - 2 * matchCount - 1)
+                matchCount++
             }
         }
 
@@ -242,38 +278,39 @@ class QuizViewModel(
         return spannable
     }
 
-    private fun setSpan(spannable: SpannableString, startIndex:Int, endIndex:Int){
+    private fun setSpan(spannable: SpannableString, startIndex: Int, endIndex: Int) {
         spannable.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(getApplication() ,R.color.colorPrimaryDark)),
+            ForegroundColorSpan(ContextCompat.getColor(getApplication(), R.color.colorPrimaryDark)),
             startIndex, endIndex,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
     }
 
 
-    private fun setPointAnimationText(point:Int, timeBonus:Int){
+    private fun setPointAnimationText(point: Int, timeBonus: Int) {
 
-        if(point > 0){
+        if (point > 0) {
             _isPointPlus.value = true
-            if(timeBonus > 0){
+            if (timeBonus > 0) {
                 _pointAnimationText.value = "Time Bonus +${timeBonus + point}"
-            }else{
+            } else {
                 _pointAnimationText.value = "+${point}"
             }
-        }else{
+        } else {
             _isPointPlus.value = false
             _pointAnimationText.value = "${point}"
         }
 
     }
 
-    private val endTimer = object:CountDownTimer(1000, 1000) {
+    private val endTimer = object : CountDownTimer(1000, 1000) {
         override fun onTick(millisUntilFinished: Long) {}
         override fun onFinish() {
             _navigateToResult.value = true
         }
     }
 
-    private fun onEndOfQuiz(){
+    private fun onEndOfQuiz() {
         _enableAnswer1.value = true
         _enableAnswer2.value = true
         _enableAnswer3.value = true

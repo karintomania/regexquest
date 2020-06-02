@@ -35,7 +35,7 @@ class QuizFragment : Fragment() {
         // datasource
         val application = requireNotNull(this.activity).application
         val dataSource = QuizDatabase.getInstance(application).quizDatabaseDao
-        val viewModelFactory = QuizViewModelFactory(dataSource,application)
+        val viewModelFactory = QuizViewModelFactory(dataSource,application,args.difficulty)
 
         val quizViewModel = ViewModelProviders
             .of(this, viewModelFactory)
