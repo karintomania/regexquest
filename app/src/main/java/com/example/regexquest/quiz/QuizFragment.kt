@@ -61,7 +61,7 @@ class QuizFragment : Fragment() {
             if (it == true) {
                 binding.textPointAnimation.apply{
                     alpha = 1f
-                    animate().alpha(0f).setDuration(1000L).setListener(null)
+                    animate().alpha(0f).setDuration(2000L).setListener(null)
                 }
                 quizViewModel.doneAnimation()
             }
