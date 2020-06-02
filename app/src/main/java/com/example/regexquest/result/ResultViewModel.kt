@@ -59,8 +59,8 @@ class ResultViewModel(
 
     init{
         _totalPoint.value = point.toString()
-        _rank.value = setRank()
-        _classText.value = setClass()
+        _rank.value = getRank()
+        _classText.value = getClass()
         _correctAnswerCountText.value = correctAnswerCount.toString()
         _wrongAnswerCountText.value   = wrongAnswerCount.toString()
 
@@ -81,7 +81,7 @@ class ResultViewModel(
         _navigateToTitle.value = false
     }
 
-    private fun setRank():String{
+    private fun getRank():String{
        return when{
            point > 120 -> "SSS"
            point > 110 -> "SS"
@@ -94,7 +94,7 @@ class ResultViewModel(
        }
     }
 
-    private fun setClass():String{
+    private fun getClass():String{
         return when(difficulty){
             0 -> "Junior"
             1 -> "Senior"
