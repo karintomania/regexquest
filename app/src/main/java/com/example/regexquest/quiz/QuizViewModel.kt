@@ -163,16 +163,10 @@ class QuizViewModel(
     private fun convertQuizEntity(quizEntityList: List<QuizEntity>):MutableList<Quiz?>{
         val quizList = mutableListOf<Quiz?>()
         for(quizEntity in quizEntityList){
-            val quiz = Quiz(unescapeNewLine(quizEntity.quiz),
-                            unescapeNewLine(quizEntity.match),
-                            mutableListOf<String>(quizEntity.answer, quizEntity.answer2, quizEntity.answer3, quizEntity.answer4))
 
-            quizList.add(quiz)
+            quizList.add(quizEntity.toQuiz())
         }
         return quizList
-    }
-    private fun unescapeNewLine(description: String): String {
-        return description.replace("\\n", System.lineSeparator())
     }
 
     fun onAnswer(index: Int) {
