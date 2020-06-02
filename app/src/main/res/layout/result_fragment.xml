@@ -261,12 +261,14 @@
                 <Button
                     android:id="@+id/button"
                     style="@style/quiz_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
+                    android:layout_marginStart="24dp"
                     android:layout_marginTop="0dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="60dp"
+                    android:background="@color/colorPrimary"
                     android:onClick="@{()->resultViewModel.onBackToTitle()}"
                     android:text="Back to Title" />
 
