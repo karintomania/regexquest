@@ -67,8 +67,8 @@ class ResultViewModel(
 
        setHighScore()
 
-        val accuracy = correctAnswerCount.div((correctAnswerCount + wrongAnswerCount).toFloat()) * 100f
-        _accuracyText.value = "%.2f".format(accuracy)
+        val accuracy = calcAccuracy(correctAnswerCount, wrongAnswerCount)
+        _accuracyText.value = "%.2f".format(accuracy) + "%"
 
 
     }
@@ -101,6 +101,14 @@ class ResultViewModel(
             2 -> "CTO"
             else -> ""
         }
+    }
+
+    private fun calcAccuracy(correctAnswerCount: Int, wrongAnswerCount: Int):Float{
+        var accuracy = 0f
+        if(correctAnswerCount != 0 || wrongAnswerCount != 0){
+            accuracy = correctAnswerCount.div((correctAnswerCount + wrongAnswerCount).toFloat()) * 100f
+        }
+        return accuracy
     }
 
     private fun setHighScore(){
