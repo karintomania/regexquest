@@ -186,9 +186,10 @@
             <Button
                 android:id="@+id/button_answer1"
                 style="@style/quiz_button"
-                android:onClick="@{()->quizViewModel.onAnswer(0)}"
+                android:backgroundTint="@{quizViewModel.enableAnswer1 ? @color/colorAnswerButton : @color/colorAnswerButtonDisabled}"
                 android:enabled="@{quizViewModel.enableAnswer1}"
-            android:text="@{quizViewModel.currentQuiz.answers[0]}" />
+                android:onClick="@{()->quizViewModel.onAnswer(0)}"
+                android:text="@{quizViewModel.currentQuiz.answers[0]}" />
 <!--            android:text="foo" />-->
 
             <Button
@@ -196,6 +197,7 @@
                 style="@style/quiz_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@{quizViewModel.enableAnswer2 ? @color/colorAnswerButton : @color/colorAnswerButtonDisabled}"
                 android:onClick="@{()->quizViewModel.onAnswer(1)}"
                 android:enabled="@{quizViewModel.enableAnswer2}"
                 android:text="@{quizViewModel.currentQuiz.answers[1]}" />
@@ -205,18 +207,20 @@
                 style="@style/quiz_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@{quizViewModel.enableAnswer3 ? @color/colorAnswerButton : @color/colorAnswerButtonDisabled}"
                 android:onClick="@{()->quizViewModel.onAnswer(2)}"
                 android:enabled="@{quizViewModel.enableAnswer3}"
                 android:text="@{quizViewModel.currentQuiz.answers[2]}" />
 
-            <Button
-                android:id="@+id/button_answer4"
-                style="@style/quiz_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="@{()->quizViewModel.onAnswer(3)}"
-                android:enabled="@{quizViewModel.enableAnswer4}"
-                android:text="@{quizViewModel.currentQuiz.answers[3]}" />
+<!--            <Button-->
+<!--                android:id="@+id/button_answer4"-->
+<!--                style="@style/quiz_button"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:backgroundTint="@{quizViewModel.enableAnswer4 ? @color/colorAnswerButton : @color/colorAnswerButtonDisabled}"-->
+<!--                android:onClick="@{()->quizViewModel.onAnswer(3)}"-->
+<!--                android:enabled="@{quizViewModel.enableAnswer4}"-->
+<!--                android:text="@{quizViewModel.currentQuiz.answers[3]}" />-->
         </LinearLayout>
 
     </LinearLayout>

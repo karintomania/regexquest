@@ -25,7 +25,7 @@
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="android:layout_marginEnd">5dp</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="quiz_button" parent="title_button">
@@ -37,7 +37,7 @@
         <item name="android:layout_marginEnd">30dp</item>
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="result_table_header">
