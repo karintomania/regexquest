@@ -11,20 +11,19 @@ data class QuizEntity (
 
     val difficulty: Int,
 
-    val quiz: String,
-    val match: String,
+    val quizId: String,
+    val quizText: String,
 
     val answer: String,
     val answer2: String,
-    val answer3: String,
-    val answer4: String
+    val answer3: String
 
 ){
     fun toQuiz(): Quiz {
         return Quiz(
-            unescapeNewLine(this.quiz),
-            unescapeNewLine(this.match),
-            mutableListOf<String>(this.answer, this.answer2, this.answer3, this.answer4))
+            unescapeNewLine(this.quizId),
+            unescapeNewLine(this.quizText),
+            mutableListOf<String>(this.answer, this.answer2, this.answer3))
     }
 
     private fun unescapeNewLine(description: String): String {

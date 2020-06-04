@@ -61,6 +61,10 @@ class QuizViewModel(
     val currentQuiz: LiveData<Quiz?>
         get() = _currentQuiz
 
+    val quizIdText = Transformations.map(currentQuiz) { quiz ->
+        "  (${quiz?.quizId})"
+    }
+
     val spannableMatch = Transformations.map(currentQuiz) { quiz ->
         formatMatch(quiz)
     }
@@ -99,9 +103,6 @@ class QuizViewModel(
     val enableAnswer3: LiveData<Boolean?>
         get() = _enableAnswer3
 
-    private val _enableAnswer4 = MutableLiveData<Boolean?>()
-    val enableAnswer4: LiveData<Boolean?>
-        get() = _enableAnswer4
 
     private val _animation = MutableLiveData<Boolean?>()
     val animation: LiveData<Boolean?>
@@ -203,7 +204,6 @@ class QuizViewModel(
                 0 -> _enableAnswer1.value = false
                 1 -> _enableAnswer2.value = false
                 2 -> _enableAnswer3.value = false
-                3 -> _enableAnswer4.value = false
             }
             answerCount++
             wrongAnswerCount++
@@ -228,7 +228,6 @@ class QuizViewModel(
         _enableAnswer1.value = true
         _enableAnswer2.value = true
         _enableAnswer3.value = true
-        _enableAnswer4.value = true
         timeBonusTimer.start()
     }
 
@@ -237,8 +236,8 @@ class QuizViewModel(
         Log.i(tag, "size = ${quizzes.size.toString()}")
         val tmpQuiz = quizzes[currentQuizIndex]
         _currentQuiz.value = Quiz(
-            quiz = tmpQuiz!!.quiz,
-            match = tmpQuiz!!.match,
+            quizId = tmpQuiz!!.quizId,
+            quizText = tmpQuiz!!.quizText,
             answers = tmpQuiz!!.answers.toMutableList()
         )
 
@@ -247,19 +246,19 @@ class QuizViewModel(
 
     // edit style of match text
     private fun formatMatch(quiz: Quiz?): SpannableString {
-        val match = quiz!!.match
-        val matchText = match.replace("%", "")
+        val quizText = quiz!!.quizText
+        val quizPlainText = quizText.replace("%", "")
         var startIndex = 0
         var endIndex = 0
         var lastEndIndex = -1
         var matchCount = 0
 
-        var spannable = SpannableString(matchText)
+        var spannable = SpannableString(quizPlainText)
 
 
         while (startIndex != -1) {
-            startIndex = match.indexOf("%", lastEndIndex + 1)
-            endIndex = match.indexOf("%", startIndex + 1)
+            startIndex = quizText.indexOf("%", lastEndIndex + 1)
+            endIndex = quizText.indexOf("%", startIndex + 1)
             lastEndIndex = endIndex
             if (startIndex != -1) {
                 setSpan(spannable, startIndex - 2 * matchCount, endIndex - 2 * matchCount - 1)
@@ -308,7 +307,6 @@ class QuizViewModel(
         _enableAnswer1.value = true
         _enableAnswer2.value = true
         _enableAnswer3.value = true
-        _enableAnswer4.value = true
 
         endTimer.start()
     }

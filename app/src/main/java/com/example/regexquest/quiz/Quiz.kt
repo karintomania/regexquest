@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 data class Quiz (
-    val quiz: String,
-    val match: String,
+    val quizId: String,
+    val quizText: String,
     val answers: MutableList<String>
 )

@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@Database(entities = [QuizEntity::class, HighScore::class], version = 2, exportSchema = false)
+@Database(entities = [QuizEntity::class, HighScore::class], version = 3, exportSchema = false)
 abstract class QuizDatabase : RoomDatabase() {
 
     abstract val quizDatabaseDao: QuizDatabaseDao
