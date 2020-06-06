@@ -3,4 +3,22 @@
     <string name="title_text">Reg Ex Quest</string>
     <string name="title_howToPlay"><u>how to play?</u></string>
     <string name="quiz_quizHeader">Quiz</string>
+    <string name="howToTitile">How To Play</string>
+    <string name="howToOverview">The goal of the quiz is to find the correct regex that matches target text.</string>
+    <string name="howToClass">Choose the difficulty on title screen.\n Junior : Easy\n Senior : Midium\n CTO   : Hard</string>
+    <string name="howToAboutQuiz1">1. Quiz Text\n
+        Blue Letter : Target text to be matched\n
+        Gray Letter : Gray letters shouldn\'t be matched.</string>
+    <string name="howToAboutQuiz2">2. Options\n
+        .*oo: matches \"foo\" and \"boo\"\n
+        oo.*: matches only \"oo\" (doesn\'t match \"f\" and \"b\")\n
+        .*  : matches \"foo\", \"boo\" and \"bar\" (too much)\n\n
+        Target text (blue letter) is \"foo\" and \"boo\", so the answer is \".*oo\".
+    </string>
+    <string name="howToAboutQuiz3">Time bar\n
+        The time limit is 90 seconds.</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_cheatSheet">Cheat Sheet</string>
+    <string name="label_howToPlay">How To Play</string>
 </resources>

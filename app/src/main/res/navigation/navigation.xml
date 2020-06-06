@@ -8,24 +8,28 @@
     <fragment
         android:id="@+id/titleFragment"
         android:name="com.example.regexquest.title.TitleFragment"
-        android:label="TitleFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/title_fragment" >
         <action
             android:id="@+id/action_titleFragment_to_quizFragment"
             app:destination="@id/quizFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/titleFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.example.regexquest.quiz.QuizFragment"
-        android:label="QuizFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/quiz_fragment" >
         <action
             android:id="@+id/action_quizFragment_to_resultFragment"
             app:destination="@id/resultFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popUpTo="@id/quizFragment"
+            app:popUpToInclusive="true" />
         <argument
             android:name="difficulty"
             app:argType="integer" />
@@ -34,7 +38,7 @@
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.example.regexquest.result.ResultFragment"
-        android:label="ResultFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/result_fragment" >
         <action
             android:id="@+id/action_resultFragment_to_titleFragment"
@@ -54,4 +58,15 @@
             android:name="difficulty"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/howtoFragment"
+        android:name="com.example.regexquest.Info.HowToFragment"
+        android:label="@string/label_howToPlay"
+        tools:layout="@layout/howto_fragment" />
+    <fragment
+        android:id="@+id/cheatSheetFragment"
+        android:name="com.example.regexquest.Info.CheatSheetFragment"
+        android:label="@string/label_cheatSheet"
+        tools:layout="@layout/cheat_sheet_fragment" />
+
 </navigation>

@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/item_howto"
+        android:id="@+id/howtoFragment"
         android:title="How to play" />
     <item
-        android:id="@+id/item_cheatSheet"
-        android:title="Cheet Sheet" />
+        android:id="@+id/cheatSheetFragment"
+        android:title="Cheat Sheet" />
 </menu>

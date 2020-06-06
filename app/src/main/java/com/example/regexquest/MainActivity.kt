@@ -17,6 +17,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val navController = this.findNavController(R.id.myNavHostFragment)
+        NavigationUI.setupActionBarWithNavController(this,navController)
+
         MobileAds.initialize(this) {
             mAdView = findViewById(R.id.adView)
             val adRequest = AdRequest.Builder().build()
